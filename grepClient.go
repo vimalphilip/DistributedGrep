@@ -79,52 +79,7 @@ func main() {
 	fmt.Println(t1.Sub(t0))
 }
 
-/*
- * Writes the key value regex patterns as one regex for the grep
- * to use
- * @param key the grep pattern for the key
- * @param value the grep pattern for the value
- * @return the single grep pattern to query key-values in log files
- */
-func rewriteKeyAndValue(key string, value string) string {
-	var newKey string
-	var newValue string
 
-	newKey = key
-	newValue = value
-
-	// Check ^ on key
-	if strings.HasPrefix(newKey, "^") {
-		newKey = newKey[1:len(newKey)]
-	} else {
-		newKey = "[^:]*" + newKey
-	}
-
-	// Check $ on key
-	if strings.HasSuffix(newKey, "$") {
-		newKey = newKey[0 : len(newKey)-1]
-	} else {
-		newKey = newKey + "[^:]*"
-	}
-
-	// Check ^ on value
-	if strings.HasPrefix(newValue, "^") {
-		newValue = newValue[1:len(newValue)]
-	} else {
-		newValue = "[^:]*" + newValue
-	}
-
-	// Check $ on value
-	if strings.HasSuffix(newValue, "$") {
-		newValue = newValue[0 : len(newValue)-1]
-	} else {
-		newValue = newValue + "[^:]*"
-	}
-
-	serverInput := "^" + newKey + ":" + newValue + "$"
-
-	return serverInput
-}
 
 /*
  * Sends a message to a server, and returns the file into a channel
